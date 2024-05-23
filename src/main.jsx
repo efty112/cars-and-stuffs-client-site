@@ -12,6 +12,7 @@ import About from './Components/Contact and About/About.jsx';
 import Home from './Components/Home/Home.jsx';
 import LogIn from './Components/LogIn, SignUp/LogIn.jsx';
 import SignUp from './Components/LogIn, SignUp/SignUp.jsx';
+import ContextProvider from './ContextProvider/ContextProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/signUp",
-        element: <SignUp></SignUp> ,
+        element: <SignUp></SignUp>,
       },
     ],
   },
@@ -45,6 +46,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ContextProvider>
+      <RouterProvider router={router} />
+    </ContextProvider>
   </React.StrictMode>,
 )

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
+
     const links = <>
         <li>
             <NavLink
@@ -18,7 +19,7 @@ const Navbar = () => {
                 Home
             </NavLink>
         </li>
-        
+
         <li>
             <NavLink
                 to="/addProduct"
@@ -34,7 +35,7 @@ const Navbar = () => {
                 Add Product
             </NavLink>
         </li>
-        
+
         <li>
             <NavLink
                 to="/myCart"
@@ -50,7 +51,7 @@ const Navbar = () => {
                 My Cart
             </NavLink>
         </li>
-        
+
         <li>
             <NavLink
                 to="/logIn"
@@ -66,7 +67,7 @@ const Navbar = () => {
                 Login
             </NavLink>
         </li>
-        
+
         <li>
             <NavLink
                 to="/aboutUs"
@@ -82,7 +83,7 @@ const Navbar = () => {
                 About Us
             </NavLink>
         </li>
-        
+
         <li>
             <NavLink
                 to="/contactUs"
@@ -124,7 +125,9 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                    <Link to='/signUp'>
+                        <button className="btn-wide bg-red-600 text-white text-xl p-3 rounded-lg">SignUp</button>
+                    </Link>
                 </div>
             </div>
         </div>
