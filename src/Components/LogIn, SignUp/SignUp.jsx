@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import CommonBanner from "../Common/CommonBanner";
 import { useContext, useState } from "react";
 import { LevelContext } from "../../ContextProvider/ContextProvider";
 import Swal from 'sweetalert2'
 
 const SignUp = () => {
-    const { signUp} = useContext(LevelContext);
+    const { signUp, updateUserProfile, currentUser } = useContext(LevelContext);
     const [error, setError] = useState(false);
 
     const handleSignUp = (e) => {
@@ -22,9 +22,17 @@ const SignUp = () => {
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
-                // ...
-                user.displayName = name;
-                user.photoURL = photo;
+
+                updateUserProfile(name, photo)
+                    .then(() => {
+                        // Profile updated!
+                        // ...
+                    }).catch((error) => {
+                        // An error occurred
+                        // ...
+                        console.log(error)
+                    });
+
                 Swal.fire({
                     title: "Successful",
                     text: "You signed up successfully",
@@ -40,6 +48,10 @@ const SignUp = () => {
                 setError(true)
                 console.log(errorCode, errorMessage)
             });
+    }
+
+    if (currentUser) {
+        return (<Navigate to={'/'}></Navigate>);
     }
 
     return (

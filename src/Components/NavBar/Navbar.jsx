@@ -1,7 +1,20 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { LevelContext } from "../../ContextProvider/ContextProvider";
 
 const Navbar = () => {
+    const { currentUser, logOut } = useContext(LevelContext);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                // Sign-out successful.
+            }).catch((error) => {
+                // An error happened.
+                console.log(error)
+            });
+    }
 
     const links = <>
         <li>
@@ -22,7 +35,7 @@ const Navbar = () => {
 
         <li>
             <NavLink
-                to="/addProduct"
+                to="/addProducts"
                 style={({ isActive }) => {
                     return {
                         fontWeight: isActive ? "bold" : "",
@@ -32,7 +45,7 @@ const Navbar = () => {
                     };
                 }}
             >
-                Add Product
+                Add Products
             </NavLink>
         </li>
 
@@ -52,21 +65,23 @@ const Navbar = () => {
             </NavLink>
         </li>
 
-        <li>
-            <NavLink
-                to="/logIn"
-                style={({ isActive }) => {
-                    return {
-                        fontWeight: isActive ? "bold" : "",
-                        color: isActive ? "red" : "white",
-                        backgroundColor: "transparent",
-                        fontSize: "20px"
-                    };
-                }}
-            >
-                Login
-            </NavLink>
-        </li>
+        {
+            currentUser ? "" : <li>
+                <NavLink
+                    to="/logIn"
+                    style={({ isActive }) => {
+                        return {
+                            fontWeight: isActive ? "bold" : "",
+                            color: isActive ? "red" : "white",
+                            backgroundColor: "transparent",
+                            fontSize: "20px"
+                        };
+                    }}
+                >
+                    Login
+                </NavLink>
+            </li>
+        }
 
         <li>
             <NavLink
@@ -124,11 +139,30 @@ const Navbar = () => {
                         }
                     </ul>
                 </div>
-                <div className="navbar-end">
-                    <Link to='/signUp'>
-                        <button className="btn-wide bg-red-600 text-white text-xl p-3 rounded-lg">SignUp</button>
-                    </Link>
-                </div>
+
+                {
+                    currentUser ?
+                        <div className="navbar-end">
+                            <div className="flex flex-col items-end">
+                                <h1 className="text-lg">{currentUser ? currentUser.displayName : ""}</h1>
+                                <h1 className="text-lg">{currentUser ? currentUser.email : ""}</h1>
+                            </div>
+                            <div className="avatar">
+                                <div className="w-14 rounded-full">
+                                    <img src={currentUser ? currentUser.photoURL : ""} />
+                                </div>
+                            </div>
+                            <div>
+                                <button onClick={handleLogOut} className="bg-red-600 text-white text-xl p-3 rounded-lg">LogOut</button>
+                            </div>
+                        </div> :
+                        <div className="navbar-end">
+                            <Link to='/signUp'>
+                                <button className="btn-wide bg-red-600 text-white text-xl p-3 rounded-lg">SignUp</button>
+                            </Link>
+                        </div>
+                }
+
             </div>
         </div>
     );

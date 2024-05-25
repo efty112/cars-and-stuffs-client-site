@@ -1,19 +1,26 @@
 import { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import app from '../Firebase/firebase.config';
 
 const auth = getAuth(app);
 export const LevelContext = createContext(null);
 
+
 const ContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
+            if (user) {
+                setCurrentUser(user);
+                setLoading(false)
+            } else {
+                setCurrentUser(null);
+            }
         });
-        return () => {unsubscribe()};
+        return () => { unsubscribe() };
     }, [])
 
     const logIn = (email, password) => {
@@ -24,7 +31,14 @@ const ContextProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
+    const updateUserProfile = (display, photo) => {
+        return updateProfile(auth.currentUser, {
+            displayName: display, photoURL: photo
+        })
+    }
+
     const logOut = () => {
+        setLoading(true);
         return signOut(auth);
     }
 
@@ -32,7 +46,9 @@ const ContextProvider = ({ children }) => {
         signUp,
         logIn,
         currentUser,
-        logOut
+        logOut,
+        updateUserProfile,
+        loading
     }
 
     return (

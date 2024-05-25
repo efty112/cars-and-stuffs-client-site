@@ -1,12 +1,16 @@
 import { useContext, useState } from "react";
 import CommonBanner from "../Common/CommonBanner";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { LevelContext } from "../../ContextProvider/ContextProvider";
 import Swal from "sweetalert2";
 
 const LogIn = () => {
-    const { logIn } = useContext(LevelContext);
+    const { logIn, currentUser} = useContext(LevelContext);
     const [error, setError] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    console.log(location)
 
     const handleLogIn = (e) => {
         e.preventDefault();
@@ -29,6 +33,7 @@ const LogIn = () => {
                     icon: "success"
                 });
                 form.reset();
+                navigate(location?.state? location.state : '/');
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -38,8 +43,13 @@ const LogIn = () => {
             });
     }
 
+    if (currentUser) {
+        return (<Navigate to={'/'}></Navigate>);
+    }
+
     return (
         <div>
+
             <CommonBanner name={"LogIn"}></CommonBanner>
 
             <div className="hero my-10">

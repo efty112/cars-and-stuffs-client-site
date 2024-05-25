@@ -5,11 +5,15 @@ import "react-multi-carousel/lib/styles.css";
 
 const BrandNames = () => {
     const [brands, setBrands] = useState([]);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetch('http://localhost:5000/carBrandNames')
             .then(res => res.json())
-            .then(data => setBrands(data))
+            .then(data => {
+                setBrands(data)
+                setLoading(false)
+            })
     }, [])
 
     const responsive = {
@@ -34,17 +38,16 @@ const BrandNames = () => {
     return (
         <div className="my-16 space-y-5">
             <h1 className="text-5xl font-bold text-center text-red-600">Brands</h1>
-            {/* {
-                brands.map(brand => <BrandCard key={brand.id} brand={brand}></BrandCard>)
-            } */}
             <div>
-                <Carousel responsive={responsive} removeArrowOnDeviceType={'mobile'} centerMode={true}>
-                    {
-                        brands.map(brand => <BrandCard key={brand.id} brand={brand}></BrandCard>)
-                    }
-                </Carousel>
+                {
+                    loading ? <div className="flex justify-center"><span className="loading loading-bars loading-lg"></span></div> :
+                        <Carousel responsive={responsive} removeArrowOnDeviceType={'mobile'} centerMode={true}>
+                            {
+                                brands.map(brand => <BrandCard key={brand.id} brand={brand}></BrandCard>)
+                            }
+                        </Carousel>
+                }
             </div>
-
         </div>
     );
 };
