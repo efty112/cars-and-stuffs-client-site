@@ -53,22 +53,22 @@ const router = createBrowserRouter([
       },
       {
         path: "/seeAllCars/:brand_name",
-        loader: ({params}) => fetch(`http://localhost:5000/cardetails/${params.brand_name}`),
+        loader: ({params}) => fetch(`https://cars-and-stuffs-server-site.vercel.app/cardetails/${params.brand_name}`),
         element: <SeeAllCars></SeeAllCars>,
       },
       {
         path: "/details/:_id",
-        loader: ({params}) => fetch(`http://localhost:5000/details/${params._id}`),
+        loader: ({params}) => fetch(`https://cars-and-stuffs-server-site.vercel.app/details/${params._id}`),
         element: <PrivateRoute1><Details></Details></PrivateRoute1>,
       },
       {
         path: "/myCart",
-        loader: () => fetch('http://localhost:5000/cart'),
+        loader: () => fetch('https://cars-and-stuffs-server-site.vercel.app/cart'),
         element: <PrivateRoute1><MyCart></MyCart></PrivateRoute1>,
       },
       {
         path: "/update/:_id",
-        loader: ({params}) => fetch(`http://localhost:5000/details/${params._id}`),
+        loader: ({params}) => fetch(`https://cars-and-stuffs-server-site.vercel.app/details/${params._id}`),
         element: <PrivateRoute1><Update></Update></PrivateRoute1> ,
       },
       

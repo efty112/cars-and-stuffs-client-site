@@ -20,7 +20,7 @@ const Update = () => {
         // console.log(updatedData);
 
 
-        fetch(`http://localhost:5000/details/${loadedData._id}`, {
+        fetch(`https://cars-and-stuffs-server-site.vercel.app/details/${loadedData._id}`, {
             method: 'PUT',
             body: JSON.stringify(updatedData),
             headers: {

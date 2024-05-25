@@ -11,7 +11,7 @@ const Details = () => {
 
     const handleAddToCart = () => {
 
-        fetch('http://localhost:5000/cart', {
+        fetch('https://cars-and-stuffs-server-site.vercel.app/cart', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

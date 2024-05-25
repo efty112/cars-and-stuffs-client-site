@@ -6,7 +6,7 @@ const AddProducts = () => {
     const [brands, setBrands] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/carBrandNames')
+        fetch('https://cars-and-stuffs-server-site.vercel.app/carBrandNames')
             .then(res => res.json())
             .then(data => {
                 setBrands(data)
@@ -27,7 +27,7 @@ const AddProducts = () => {
         const product = { brandName, carModel, photo, price, rating, shortDescription };
         // console.log(product);
 
-        fetch('http://localhost:5000/cardetails', {
+        fetch('https://cars-and-stuffs-server-site.vercel.app/cardetails', {
             method: 'POST',
             body: JSON.stringify(product),
             headers: {
